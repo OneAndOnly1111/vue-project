@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" href="./assets/logo.png" type="image/x-ico">
+  <link rel="stylesheet" type="text/css" href="../static/css/guacamole.css"/>
+  <title>Guacamole Example</title>
+</head>
+<body>
+  <!-- Display -->
+  <div id="display">
+    Guacamole Example Content
+  </div>
+  <script type="text/javascript" src="../static/js/guacamole/modules/Client.js"></script>
+  <script type="text/javascript" src="../static/js/guacamole/modules/Tunnel.js"></script>
+  <script type="text/javascript" src="../static/js/guacamole/modules/Display.js"></script>
+  <script type="text/javascript" src="../static/js/guacamole/modules/Layer.js"></script>
+  <script type="text/javascript" src="../static/js/guacamole/modules/IntegerPool.js"></script>
+  <script type="text/javascript" src="../static/js/guacamole/modules/Status.js"></script>
+  <script type="text/javascript" src="../static/js/guacamole/modules/Mouse.js"></script>
+  <script type="text/javascript" src="../static/js/guacamole/modules/Keyboard.js"></script>
+  <script type="text/javascript">
+    // Get display div from document
+    var display = document.getElementById('display')
+
+    // Instantiate client, using an HTTP tunnel for communications.
+    var guac = new Guacamole.Client(
+    // new Guacamole.HTTPTunnel("tunnel")
+    new Guacamole.HTTPTunnel('http://client/tunnel')
+    )
+
+    // Add client to display div
+    display.appendChild(guac.getDisplay().getElement())
+
+    // Error handler
+    guac.onerror = function(error) {
+    alert(error)
+    }
+
+    // Connect
+    guac.connect()
+
+    // Disconnect on close
+    window.onunload = function () {
+    guac.disconnect()
+    }
+
+    // Mouse
+    var mouse = new Guacamole.Mouse(guac.getDisplay().getElement());
+    mouse.onmousedown =
+    mouse.onmouseup =
+    mouse.onmousemove = function (mouseState) {
+    guac.sendMouseState(mouseState)
+    }
+
+    // Keyboard
+    var keyboard = new Guacamole.Keyboard(document)
+    keyboard.onkeydown = function (keysym) {
+    guac.sendKeyEvent(1, keysym)
+    }
+    keyboard.onkeyup = function (keysym) {
+    guac.sendKeyEvent(0, keysym)
+    }
+  </script>
+</body>
+</html>

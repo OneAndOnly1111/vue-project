@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <Layout>
+    <Layout style="height:100%">
       <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
         <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses">
           <MenuItem name="1-1">
@@ -21,7 +21,7 @@
         <Header :style="{padding: 0}" class="layout-header-bar">
           <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '20px 20px 0'}" type="navicon-round" size="24"></Icon>
         </Header>
-        <Content :style="{margin: '20px', background: '#fff', minHeight: '600px'}">
+        <Content :style="{margin: '20px', background: '#fff'}">
           Content
           <router-view></router-view>
         </Content>
@@ -59,11 +59,10 @@
 </script>
 <style scoped>
   .layout{
-    border: 1px solid #d7dde4;
     background: #f5f7f9;
     position: relative;
-    border-radius: 4px;
     overflow: hidden;
+    height: 100%;
   }
   .layout-header-bar{
     background: #fff;

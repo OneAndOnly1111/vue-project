@@ -9,9 +9,19 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+// const entries = require('./entries')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
+
+// const htmlPlugins = Object.keys(entries).forEach(key => (
+//   new HtmlWebpackPlugin({
+//     filename: `${key}.html`,
+//     template: `./src/${key}.html`,
+//     inject: true,
+//     chunks: [key]
+//   })
+// ))
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -55,6 +65,11 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
+      inject: true
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'guacamole.html',
+      template: './src/guacamole.html',
       inject: true
     }),
     // copy custom static assets
